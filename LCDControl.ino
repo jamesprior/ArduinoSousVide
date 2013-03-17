@@ -56,7 +56,6 @@ String statusLine(byte forIndex){
       }
       break;
     case 4:
-    // TODO, this.  Get the step number and the output in a string
       return String("s: ")+String(pidStepNumber)+String(" d: ")+formatTemp(pidOutput);
       break;
     default:
@@ -76,17 +75,25 @@ void LCDControlSetup() {
 }
 
 String formatTemp(float tempAsC){
-  char floatString[10];
-  dtostrf(tempAsC,TEMP_WIDTH-1,1,floatString);
-  return String(floatString)+tempUnit;
+  if (tempAsC > 0. && tempAsC < 120.0) {
+    char floatString[20];
+    dtostrf(tempAsC,TEMP_WIDTH-1,1,floatString);
+    return String(floatString)+tempUnit;
+  } else {
+    return String("NaN");
+  }
 }
 
 // Returns a five character string
 String tempAsString(float temp){
-  if (tempUnit == 'F'){
-    temp = DallasTemperature::toFahrenheit(temp);
+  if (temp > 0.0 && temp < 120.0){
+    if (tempUnit == 'F'){
+      temp = DallasTemperature::toFahrenheit(temp);
+    }
+    return formatTemp(temp);
+  } else {
+    return String("NaN");
   }
-  return formatTemp(temp);
 
 }
       
@@ -211,7 +218,7 @@ void LCDControlLoop() {
   }
   else {
     if (!inSetTempMode){
-      if (pidStepNumber != lastPidStepNumber){
+      if (pidStepNumber && lastPidStepNumber && pidStepNumber != lastPidStepNumber){
         lastPidStepNumber = pidStepNumber;
         writeStatus();
       }

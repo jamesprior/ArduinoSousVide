@@ -61,7 +61,7 @@ void setup()
   sensors.setResolution(jbWeldTherm, 11);
  
   //initialize the variables we're linked to
-  pidSetpoint = 37.77; // we're working in celsius
+  pidSetpoint = 63.0; // we're working in celsius
 
   //tell the PID to range between 0 and the full window size
   myPID.SetOutputLimits(0, pidWindowSteps+1);
