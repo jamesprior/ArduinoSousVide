@@ -21,13 +21,15 @@ void startStatusMode(){
   lcd.noBlink();
   lcd.clear();
   inSetTempMode = false;
+  buttons = 0;
+  lastPidStepNumber = pidStepNumber;
   writeStatus();
 }
 
 void writeStatus(){
   if (topStatusLine == 255) { topStatusLine = STATUS_LINE_COUNT-1;}
   if (topStatusLine == STATUS_LINE_COUNT) { topStatusLine = 0;}
-  
+
   lcd.setCursor(0,0);
   lcd.print(statusLine(topStatusLine));
   lcd.setCursor(0,1);
@@ -218,7 +220,7 @@ void LCDControlLoop() {
   }
   else {
     if (!inSetTempMode){
-      if (pidStepNumber && lastPidStepNumber && pidStepNumber != lastPidStepNumber){
+      if (pidStepNumber >=0 && lastPidStepNumber >= 0 && pidStepNumber != lastPidStepNumber){
         lastPidStepNumber = pidStepNumber;
         writeStatus();
       }
