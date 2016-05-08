@@ -11,5 +11,10 @@ Because it uses a mechanical relay instead of a solid state relay it divides the
 - An Arduino
 - Hamilton Beach 40515 42-Cup Coffee Urn, Silver
 
+### Libraries
+This relies on a number of libraries for the LCD control, temperature probe and most importantly the PID_v1 library.  My fork of the PID library is available at https://github.com/jamesprior/Arduino-PID-Library
+
+The remaining libraries should be declared and publically available.
+
 ### About that coffee urn
 The coffee urn comes with a 'warming' feature.  That's nice but what it means is that if the temperature of the water goes above 160 degrees farenheit or so it will stop heating with the main element and instead use the warming coil.  It does this by using a temperature sensitive resistor attached to the bottom of the urn.  If you use the same hardware you'll need to remove the base (IIRC it has torx screws or star bits) and look for the resistor.  It was round, white, and about the size of three nickles stacked together.  It has a high impedence when cool and a low impedence when warm.  If you trace the circuit on the bottom you'll see that the warming element is only active when it swaps to low impedence.  I soldered a length of heavy guage wire on either end to bypass it instead of removing it.
